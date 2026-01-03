@@ -1,0 +1,8 @@
+{
+  "name": "CityWala Platform",
+  "description": "CityWala: A modern platform connecting urban explorers with expert tutors, premium coaching, and high-quality PG accommodations. Features AI-powered matching and seamless local discovery.",
+  "requestFramePermissions": [
+    "camera",
+    "geolocation"
+  ]
+}
