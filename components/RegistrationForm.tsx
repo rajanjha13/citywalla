@@ -60,7 +60,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onComplete }) => {
         {[1, 2, 3].map(s => (
           <div 
             key={s} 
-            className={`w-14 h-14 rounded-full flex items-center justify-center font-black text-lg transition ${
+            className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center font-black text-lg transition ${
               step >= s ? 'bg-indigo-600 text-white shadow-xl' : 'bg-slate-800 text-slate-500'
             }`}
           >
@@ -73,28 +73,28 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onComplete }) => {
         <div className="space-y-10 animate-in slide-in-from-right-12 duration-300">
           <div className="flex flex-col gap-6">
             <label className="text-sm font-black text-indigo-400 uppercase tracking-[0.4em]">Partner Category</label>
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 gap-4 sm:gap-6">
               {partnerTypes.map(type => (
                 <button 
                   key={type.label}
                   onClick={() => setRole(type.id)}
-                  className={`p-8 rounded-[32px] border-2 transition flex flex-col items-center text-center gap-4 ${
+                  className={`p-6 md:p-8 rounded-[24px] sm:rounded-[32px] border-2 transition flex flex-col items-center text-center gap-4 ${
                     role === type.id ? 'border-indigo-600 bg-indigo-600/10 text-white shadow-xl' : 'border-white/5 bg-white/5 text-slate-400 hover:border-white/20'
                   }`}
                 >
-                  <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d={type.icon}></path></svg>
-                  <span className="font-bold text-lg md:text-xl">{type.label}</span>
+                  <svg className="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d={type.icon}></path></svg>
+                  <span className="font-bold text-sm sm:text-base md:text-lg">{type.label}</span>
                 </button>
               ))}
             </div>
           </div>
 
-          <div className="space-y-8">
+          <div className="space-y-6 sm:space-y-8">
             <div>
               <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-3 ml-1">Legal Registration Name</label>
               <input 
                 type="text" 
-                className="w-full px-8 py-6 bg-white/5 border-2 border-white/10 rounded-[24px] focus:ring-4 focus:ring-indigo-500/10 outline-none text-white font-bold text-lg md:text-xl"
+                className="w-full px-6 py-5 bg-white/5 border-2 border-white/10 rounded-2xl focus:ring-4 focus:ring-indigo-500/10 outline-none text-white font-bold text-lg"
                 placeholder="Full Name or Business"
                 value={formData.name}
                 onChange={e => setFormData({...formData, name: e.target.value})}
@@ -104,7 +104,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onComplete }) => {
               <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-3 ml-1">Official Email</label>
               <input 
                 type="email" 
-                className="w-full px-8 py-6 bg-white/5 border-2 border-white/10 rounded-[24px] focus:ring-4 focus:ring-indigo-500/10 outline-none text-white font-bold text-lg md:text-xl"
+                className="w-full px-6 py-5 bg-white/5 border-2 border-white/10 rounded-2xl focus:ring-4 focus:ring-indigo-500/10 outline-none text-white font-bold text-lg"
                 placeholder="email@example.com"
                 value={formData.email}
                 onChange={e => setFormData({...formData, email: e.target.value})}
@@ -115,7 +115,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onComplete }) => {
           <button 
             onClick={nextStep}
             disabled={!formData.name || !formData.email}
-            className="w-full py-7 bg-white text-slate-950 rounded-[24px] font-black text-sm md:text-base uppercase tracking-widest hover:bg-indigo-600 hover:text-white transition-all disabled:opacity-30 shadow-xl active:scale-95"
+            className="w-full py-6 bg-white text-slate-950 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-indigo-600 hover:text-white transition-all disabled:opacity-30 shadow-xl active:scale-95"
           >
             Continue
           </button>
@@ -131,7 +131,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onComplete }) => {
                 <button
                   key={subject}
                   onClick={() => toggleSubject(subject)}
-                  className={`px-6 py-4 rounded-2xl text-sm font-black uppercase tracking-widest border-2 transition ${
+                  className={`px-4 py-3 sm:px-5 sm:py-3 rounded-xl text-xs sm:text-sm font-black uppercase tracking-widest border-2 transition ${
                     formData.subjects.includes(subject) 
                       ? 'bg-indigo-600 text-white border-indigo-600' 
                       : 'bg-white/5 text-slate-400 border-white/5 hover:border-white/10'
@@ -146,41 +146,41 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onComplete }) => {
           <div>
             <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-3 ml-1">Professional Pitch</label>
             <textarea 
-              className="w-full px-8 py-6 bg-white/5 border-2 border-white/10 rounded-[24px] focus:ring-4 focus:ring-indigo-500/10 outline-none text-white font-bold text-base md:text-lg min-h-[160px]"
+              className="w-full px-6 py-5 bg-white/5 border-2 border-white/10 rounded-2xl focus:ring-4 focus:ring-indigo-500/10 outline-none text-white font-bold text-base min-h-[160px]"
               placeholder="Tell us about your coaching/teaching style..."
               value={formData.bio}
               onChange={e => setFormData({...formData, bio: e.target.value})}
             ></textarea>
           </div>
 
-          <div className="flex gap-6">
-            <button onClick={prevStep} className="flex-1 py-6 glass border-white/10 text-white rounded-[24px] font-black text-xs uppercase hover:bg-white/10 transition">Back</button>
-            <button onClick={nextStep} disabled={formData.subjects.length === 0 || !formData.bio} className="flex-1 py-6 bg-white text-slate-950 rounded-[24px] font-black text-xs uppercase shadow-xl disabled:opacity-30">Next</button>
+          <div className="flex gap-4 sm:gap-6">
+            <button onClick={prevStep} className="flex-1 py-5 glass border-white/10 text-white rounded-2xl font-black text-xs uppercase hover:bg-white/10 transition">Back</button>
+            <button onClick={nextStep} disabled={formData.subjects.length === 0 || !formData.bio} className="flex-1 py-5 bg-white text-slate-950 rounded-2xl font-black text-xs uppercase shadow-xl disabled:opacity-30">Next</button>
           </div>
         </div>
       )}
 
       {step === 3 && (
         <div className="space-y-10 animate-in slide-in-from-right-12 duration-300">
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-2 gap-4 sm:gap-6">
             <div>
               <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-3 ml-1">Rate (₹ / hr or mo)</label>
-              <input type="number" className="w-full px-8 py-6 bg-white/5 border-2 border-white/10 rounded-[24px] focus:ring-4 focus:ring-indigo-500/10 text-white font-bold text-lg" value={formData.hourlyRate} onChange={e => setFormData({...formData, hourlyRate: parseInt(e.target.value)})} />
+              <input type="number" className="w-full px-6 py-5 bg-white/5 border-2 border-white/10 rounded-2xl focus:ring-4 focus:ring-indigo-500/10 text-white font-bold text-lg" value={formData.hourlyRate} onChange={e => setFormData({...formData, hourlyRate: parseInt(e.target.value)})} />
             </div>
             <div>
               <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-3 ml-1">Exp (Yrs)</label>
-              <input type="number" className="w-full px-8 py-6 bg-white/5 border-2 border-white/10 rounded-[24px] focus:ring-4 focus:ring-indigo-500/10 text-white font-bold text-lg" value={formData.experience} onChange={e => setFormData({...formData, experience: parseInt(e.target.value)})} />
+              <input type="number" className="w-full px-6 py-5 bg-white/5 border-2 border-white/10 rounded-2xl focus:ring-4 focus:ring-indigo-500/10 text-white font-bold text-lg" value={formData.experience} onChange={e => setFormData({...formData, experience: parseInt(e.target.value)})} />
             </div>
           </div>
 
           <div>
             <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-3 ml-1">Operating City</label>
-            <input type="text" className="w-full px-8 py-6 bg-white/5 border-2 border-white/10 rounded-[24px] focus:ring-4 focus:ring-indigo-500/10 text-white font-bold text-lg" placeholder="e.g. Pune, Bangalore" value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})} />
+            <input type="text" className="w-full px-6 py-5 bg-white/5 border-2 border-white/10 rounded-2xl focus:ring-4 focus:ring-indigo-500/10 text-white font-bold text-lg" placeholder="e.g. Pune, Bangalore" value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})} />
           </div>
 
-          <div className="flex gap-6">
-            <button onClick={prevStep} className="flex-1 py-6 glass border-white/10 text-white rounded-[24px] font-black text-xs uppercase hover:bg-white/10 transition">Back</button>
-            <button onClick={handleFinish} disabled={!formData.location} className="flex-1 py-6 bg-indigo-600 text-white rounded-[24px] font-black text-xs uppercase shadow-xl disabled:opacity-30">Finish</button>
+          <div className="flex gap-4 sm:gap-6">
+            <button onClick={prevStep} className="flex-1 py-5 glass border-white/10 text-white rounded-2xl font-black text-xs uppercase hover:bg-white/10 transition">Back</button>
+            <button onClick={handleFinish} disabled={!formData.location} className="flex-1 py-5 bg-indigo-600 text-white rounded-2xl font-black text-xs uppercase shadow-xl disabled:opacity-30">Finish</button>
           </div>
         </div>
       )}

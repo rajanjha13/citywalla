@@ -15,19 +15,19 @@ const BottomNav: React.FC<BottomNavProps> = ({ activeTab, setActiveTab }) => {
   ];
 
   return (
-    <div className="md:hidden fixed bottom-3 left-1/2 -translate-x-1/2 w-[90%] max-w-[360px] z-50">
-      <nav className="glass bg-slate-900/95 rounded-[20px] shadow-2xl border border-white/10 overflow-hidden">
-        <div className="flex justify-around items-center h-12 px-1">
+    <div className="md:hidden fixed bottom-4 left-1/2 -translate-x-1/2 w-[92%] max-w-[380px] z-50">
+      <nav className="glass bg-slate-900/95 rounded-[28px] shadow-2xl border border-white/10 overflow-hidden">
+        <div className="flex justify-around items-center h-16 px-1">
           {navItems.map((item) => (
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
-              className={`relative flex flex-col items-center justify-center flex-1 h-full transition-all duration-300 ${
+              className={`relative flex flex-col items-center justify-center flex-1 h-full transition-all duration-300 group ${
                 activeTab === item.id ? 'text-indigo-400' : 'text-slate-500'
               }`}
             >
               <svg
-                className={`w-4 h-4 mb-0.5 transition-all duration-300 ${activeTab === item.id ? 'scale-110 drop-shadow-[0_0_5px_rgba(99,102,241,0.5)]' : ''}`}
+                className={`w-5 h-5 mb-1 transition-all duration-300 group-active:scale-90 ${activeTab === item.id ? 'scale-110 drop-shadow-[0_0_5px_rgba(99,102,241,0.5)]' : ''}`}
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -35,9 +35,9 @@ const BottomNav: React.FC<BottomNavProps> = ({ activeTab, setActiveTab }) => {
               >
                 {item.icon}
               </svg>
-              <span className="text-[7px] font-black uppercase tracking-[0.1em]">{item.label}</span>
+              <span className="text-[9px] font-bold uppercase tracking-wider">{item.label}</span>
               {activeTab === item.id && (
-                <div className="absolute top-1 w-0.5 h-0.5 bg-indigo-400 rounded-full"></div>
+                <div className="absolute top-2 w-1 h-1 bg-indigo-400 rounded-full shadow-[0_0_8px_rgba(99,102,241,0.8)]"></div>
               )}
             </button>
           ))}

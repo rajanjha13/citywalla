@@ -114,19 +114,43 @@ const App: React.FC = () => {
     }
   };
 
+  const handleTabChange = (newTab: any) => {
+    if (newTab === 'admin') {
+      setIsLoginModalOpen(true);
+      return;
+    }
+    
+    // Reset subject filter when leaving the tutor list view for a different main tab
+    if (activeTab === 'find' && newTab !== 'find' && newTab !== 'tutor-details') {
+      setActiveSubject('');
+    }
+
+    // Always reset main search query and filters when navigating to home
+    if (newTab === 'home') {
+      setSearchQuery('');
+      setActiveSubject('');
+    }
+
+    setActiveTab(newTab);
+  };
+
   const filteredTutors = tutors.filter(t => {
     const matchesStatus = t.status === 'approved';
-    const matchesSearch = t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         t.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         t.subjects.some(s => s.toLowerCase().includes(searchQuery.toLowerCase()));
+    const lowercasedQuery = searchQuery.toLowerCase();
+    const matchesSearch = lowercasedQuery === '' ||
+                         t.name.toLowerCase().includes(lowercasedQuery) ||
+                         t.location.toLowerCase().includes(lowercasedQuery) ||
+                         t.subjects.some(s => s.toLowerCase().includes(lowercasedQuery));
     const matchesSubject = activeSubject === '' || t.subjects.includes(activeSubject);
     return matchesStatus && matchesSearch && matchesSubject;
   });
 
   const filteredPGs = pgs.filter(p => {
-    const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         p.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         p.city.toLowerCase().includes(searchQuery.toLowerCase());
+    const lowercasedQuery = searchQuery.toLowerCase();
+    const matchesSearch = lowercasedQuery === '' ||
+                         p.name.toLowerCase().includes(lowercasedQuery) ||
+                         p.location.toLowerCase().includes(lowercasedQuery) ||
+                         p.city.toLowerCase().includes(lowercasedQuery);
     return p.status === 'approved' && matchesSearch;
   });
 
@@ -134,7 +158,7 @@ const App: React.FC = () => {
     <div className="min-h-screen flex flex-col pb-32 md:pb-0">
       <Navbar 
         activeTab={activeTab === 'pg-details' ? 'pgs' : activeTab === 'tutor-details' ? 'find' : activeTab} 
-        setActiveTab={(tab) => tab === 'admin' ? setIsLoginModalOpen(true) : setActiveTab(tab)} 
+        setActiveTab={handleTabChange} 
       />
 
       <main className="flex-grow">
@@ -157,7 +181,7 @@ const App: React.FC = () => {
                 ].map((cat, idx) => (
                   <div 
                     key={cat.title}
-                    onClick={() => setActiveTab(cat.tab as any)}
+                    onClick={() => handleTabChange(cat.tab as any)}
                     className="category-card p-8 md:p-10 rounded-[32px] cursor-pointer group animate-in fade-in slide-in-from-bottom-6 duration-500 shadow-xl"
                     style={{ animationDelay: `${idx * 150}ms` }}
                   >
@@ -186,7 +210,7 @@ const App: React.FC = () => {
                     <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-tight">Expert Faculty.</h2>
                     <p className="text-slate-400 text-lg md:text-xl font-medium mt-4">Verified home tutors and coaching institutes near you.</p>
                   </div>
-                  <button onClick={() => setActiveTab('find')} className="px-10 py-5 glass border-white/10 rounded-2xl text-white font-black text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-all shadow-xl whitespace-nowrap">View All Experts</button>
+                  <button onClick={() => handleTabChange('find')} className="px-10 py-5 glass border-white/10 rounded-2xl text-white font-black text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-all shadow-xl whitespace-nowrap">View All Experts</button>
                 </div>
                 <TutorList tutors={tutors.filter(t => t.status === 'approved').slice(0, 3)} onEnquiry={handleViewTutorDetails} />
               </div>
@@ -199,7 +223,7 @@ const App: React.FC = () => {
                     <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-tight">Premium Living.</h2>
                     <p className="text-slate-400 text-lg md:text-xl font-medium mt-4">Secure, verified accommodations for students.</p>
                   </div>
-                  <button onClick={() => setActiveTab('pgs')} className="px-10 py-5 glass border-white/10 rounded-2xl text-white font-black text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-all shadow-xl whitespace-nowrap">Explore PG's</button>
+                  <button onClick={() => handleTabChange('pgs')} className="px-10 py-5 glass border-white/10 rounded-2xl text-white font-black text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-all shadow-xl whitespace-nowrap">Explore PG's</button>
                 </div>
                 <PGList pgs={pgs.filter(p => p.status === 'approved').slice(0, 3)} onEnquiry={handleViewPGDetails} />
               </div>
@@ -208,8 +232,8 @@ const App: React.FC = () => {
         )}
 
         {activeTab === 'register' && (
-          <div className="container mx-auto px-8 py-24 flex flex-col items-center">
-            <div className="w-full max-w-3xl bg-[#0a0f1d] p-12 md:p-16 rounded-[48px] border border-white/5 shadow-2xl relative overflow-hidden">
+          <div className="container mx-auto px-4 sm:px-6 md:px-8 py-16 sm:py-24 flex flex-col items-center">
+            <div className="w-full max-w-3xl bg-[#0a0f1d] p-6 sm:p-10 md:p-16 rounded-[48px] border border-white/5 shadow-2xl relative overflow-hidden">
               <div className="absolute top-0 right-0 w-80 h-80 bg-indigo-600/10 blur-[100px] rounded-full"></div>
               <div className="flex justify-center mb-12 p-1.5 glass-dark rounded-2xl w-fit mx-auto relative z-10">
                 <button className="px-12 py-4 rounded-xl bg-indigo-600 text-white font-black text-xs uppercase tracking-widest shadow-xl">Register</button>
@@ -220,7 +244,7 @@ const App: React.FC = () => {
                   Login
                 </button>
               </div>
-              <RegistrationForm onComplete={() => setActiveTab('home')} />
+              <RegistrationForm onComplete={() => handleTabChange('home')} />
             </div>
           </div>
         )}
@@ -255,11 +279,11 @@ const App: React.FC = () => {
         )}
 
         {activeTab === 'tutor-details' && selectedTutor && (
-          <TutorDetails tutor={selectedTutor} onBack={() => setActiveTab('find')} onEnquire={() => handleEnquiry(selectedTutor)} />
+          <TutorDetails tutor={selectedTutor} onBack={() => handleTabChange('find')} onEnquire={() => handleEnquiry(selectedTutor)} />
         )}
 
         {activeTab === 'pg-details' && selectedPG && (
-          <PGDetails pg={selectedPG} onBack={() => setActiveTab('pgs')} onEnquire={() => handlePGEnquiry(selectedPG)} />
+          <PGDetails pg={selectedPG} onBack={() => handleTabChange('pgs')} onEnquire={() => handlePGEnquiry(selectedPG)} />
         )}
 
         {activeTab === 'admin' && isAdminAuth && (
@@ -273,7 +297,7 @@ const App: React.FC = () => {
 
       <BottomNav 
         activeTab={activeTab === 'pg-details' ? 'pgs' : activeTab === 'tutor-details' ? 'find' : activeTab} 
-        setActiveTab={(tab) => tab === 'admin' ? setIsLoginModalOpen(true) : setActiveTab(tab)} 
+        setActiveTab={handleTabChange} 
       />
       
       {isLoginModalOpen && (
