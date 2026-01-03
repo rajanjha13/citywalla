@@ -1,19 +1,14 @@
 
 import React, { useState, useEffect } from 'react';
-import { GeminiService } from '../services/geminiService';
-import { Tutor } from '../types';
 
 interface HeroProps {
   onSearch: (query: string) => void;
-  onAiMatch: (ids: string[]) => void;
-  tutors: Tutor[];
 }
 
 const SERVICES = ['Home Tutors', 'Coaching Classes', 'Private Tutors', "PG's"];
 
-const Hero: React.FC<HeroProps> = ({ onSearch, onAiMatch, tutors }) => {
+const Hero: React.FC<HeroProps> = ({ onSearch }) => {
   const [input, setInput] = useState('');
-  const [isAiLoading, setIsAiLoading] = useState(false);
   const [displayText, setDisplayText] = useState('');
   const [serviceIndex, setServiceIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -40,13 +35,9 @@ const Hero: React.FC<HeroProps> = ({ onSearch, onAiMatch, tutors }) => {
     return () => clearTimeout(timeout);
   }, [displayText, isDeleting, serviceIndex]);
 
-  const handleAiMatch = async () => {
+  const handleSearch = () => {
     if (!input.trim()) return;
-    setIsAiLoading(true);
-    const gemini = new GeminiService();
-    const matchedIds = await gemini.getTutorMatches(input, tutors);
-    onAiMatch(matchedIds);
-    setIsAiLoading(false);
+    onSearch(input);
   };
 
   return (
@@ -87,22 +78,15 @@ const Hero: React.FC<HeroProps> = ({ onSearch, onAiMatch, tutors }) => {
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Subject or coaching class..." 
                   className="w-full bg-white/5 text-white pl-16 pr-8 py-5 md:py-6 rounded-[22px] focus:outline-none focus:bg-white/10 font-bold transition-all placeholder:text-slate-600 text-lg md:text-xl border border-transparent focus:border-white/10"
-                  onKeyDown={(e) => e.key === 'Enter' && handleAiMatch()}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                 />
               </div>
               <button 
-                onClick={handleAiMatch}
-                disabled={isAiLoading}
-                className="bg-indigo-600 text-white px-10 py-5 md:py-6 rounded-[22px] font-black text-sm md:text-base uppercase tracking-widest flex items-center justify-center gap-3 transition-all hover:bg-indigo-500 active:scale-95 disabled:opacity-70 group shadow-xl shadow-indigo-900/40"
+                onClick={handleSearch}
+                className="bg-indigo-600 text-white px-10 py-5 md:py-6 rounded-[22px] font-black text-sm md:text-base uppercase tracking-widest flex items-center justify-center gap-3 transition-all hover:bg-indigo-500 active:scale-95 group shadow-xl shadow-indigo-900/40"
               >
-                {isAiLoading ? (
-                  <svg className="animate-spin h-6 w-6 border-2 border-white/20 border-t-white rounded-full" viewBox="0 0 24 24"></svg>
-                ) : (
-                  <>
-                    <span>Search</span>
-                    <svg className="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                  </>
-                )}
+                <span>Search</span>
+                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
               </button>
             </div>
           </div>

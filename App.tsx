@@ -14,7 +14,6 @@ import RegistrationForm from './components/RegistrationForm';
 import AdminDashboard from './components/AdminDashboard';
 import FilterBar from './components/FilterBar';
 import LoginModal from './components/LoginModal';
-import ChatBot from './components/ChatBot';
 import Footer from './components/Footer';
 import { Tutor, Enquiry, PG } from './types';
 import { MOCK_TUTORS, MOCK_PGS } from './constants';
@@ -27,7 +26,6 @@ const App: React.FC = () => {
   const [isPGEnquiryOpen, setIsPGEnquiryOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeSubject, setActiveSubject] = useState('');
-  const [matchedIds, setMatchedIds] = useState<string[] | null>(null);
   
   const [isAdminAuth, setIsAdminAuth] = useState(false);
   const [userRole, setUserRole] = useState<'customer' | 'partner' | 'admin' | null>(null);
@@ -63,12 +61,6 @@ const App: React.FC = () => {
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
-    setMatchedIds(null);
-    setActiveTab('find');
-  };
-
-  const handleAiMatchResults = (ids: string[]) => {
-    setMatchedIds(ids);
     setActiveTab('find');
   };
 
@@ -99,11 +91,10 @@ const App: React.FC = () => {
 
   const filteredTutors = tutors.filter(t => {
     const matchesStatus = t.status === 'approved';
-    const matchesAi = matchedIds ? matchedIds.includes(t.id) : true;
     const matchesSearch = t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          t.location.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesSubject = activeSubject === '' || t.subjects.includes(activeSubject);
-    return matchesStatus && matchesAi && matchesSearch && matchesSubject;
+    return matchesStatus && matchesSearch && matchesSubject;
   });
 
   const filteredPGs = pgs.filter(p => {
@@ -123,7 +114,7 @@ const App: React.FC = () => {
       <main className="flex-grow">
         {activeTab === 'home' && (
           <div className="animate-in fade-in duration-700">
-            <Hero onSearch={handleSearch} onAiMatch={handleAiMatchResults} tutors={tutors} />
+            <Hero onSearch={handleSearch} />
             
             <div className="container mx-auto px-8 -mt-20 md:-mt-24 relative z-20">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
@@ -166,7 +157,7 @@ const App: React.FC = () => {
                   </div>
                   <button onClick={() => setActiveTab('find')} className="px-10 py-5 glass border-white/10 rounded-2xl text-white font-black text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-all shadow-xl whitespace-nowrap">View All Experts</button>
                 </div>
-                <TutorList tutors={filteredTutors} onEnquiry={handleViewTutorDetails} />
+                <TutorList tutors={filteredTutors.slice(0, 3)} onEnquiry={handleViewTutorDetails} />
               </div>
             </div>
 
@@ -179,7 +170,7 @@ const App: React.FC = () => {
                   </div>
                   <button onClick={() => setActiveTab('pgs')} className="px-10 py-5 glass border-white/10 rounded-2xl text-white font-black text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-all shadow-xl whitespace-nowrap">Explore PG's</button>
                 </div>
-                <PGList pgs={filteredPGs} onEnquiry={handleViewPGDetails} />
+                <PGList pgs={filteredPGs.slice(0, 3)} onEnquiry={handleViewPGDetails} />
               </div>
             </div>
           </div>
@@ -248,8 +239,6 @@ const App: React.FC = () => {
         setActiveTab={(tab) => tab === 'admin' ? setIsLoginModalOpen(true) : setActiveTab(tab)} 
       />
       
-      <ChatBot />
-
       {isLoginModalOpen && (
         <LoginModal 
           onLogin={handleLoginSuccess} 
