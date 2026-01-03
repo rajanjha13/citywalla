@@ -18,8 +18,12 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin, onClose }) => {
     e.preventDefault();
     setError('');
     
+    // WARNING: This is a client-side authentication check for demonstration purposes only.
+    // In a real-world application, never store or check passwords on the client-side.
+    // Use a secure backend authentication service (e.g., via a Netlify Function)
+    // that validates credentials against environment variables or a database.
     if (role === 'admin') {
-      if (userId === 'admin' && password === '@Rajanjha18') {
+      if (userId === 'admin' && password === 'adminpass') {
         onLogin(true, 'admin');
       } else {
         setError('Invalid Admin Credentials.');

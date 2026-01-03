@@ -9,14 +9,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@700;800;900&display=swap" rel="stylesheet">
-    <script>
-      // Shim process.env for static hosting environments like GitHub Pages
-      window.process = { 
-        env: { 
-          API_KEY: "" 
-        } 
-      };
-    </script>
     <style>
         :root {
             --primary: #6366f1;
@@ -85,6 +77,41 @@
         /* Hide scrollbars but allow scrolling */
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Animation utilities (from tailwindcss-animate) */
+        :root {
+            --animate-duration: 1s;
+            --animate-delay: 1s;
+            --animate-repeat: 1;
+        }
+        @keyframes-name-fade-in { from { opacity: 0 } to { opacity: 1 } }
+        @keyframes-name-fade-out { from { opacity: 1 } to { opacity: 0 } }
+        @keyframes-name-slide-in-from-top { from { transform: translateY(-100%) } to { transform: translateY(0) } }
+        @keyframes-name-slide-in-from-bottom { from { transform: translateY(100%) } to { transform: translateY(0) } }
+        @keyframes-name-slide-in-from-left { from { transform: translateX(-100%) } to { transform: translateX(0) } }
+        @keyframes-name-slide-in-from-right { from { transform: translateX(100%) } to { transform: translateX(0) } }
+        @keyframes-name-zoom-in { from { transform: scale(0) } to { transform: scale(1) } }
+
+        .animate-in { animation: keyframes-name-fade-in var(--animate-duration, 0.3s) ease-out both; }
+        .fade-in { animation-name: keyframes-name-fade-in; }
+        .slide-in-from-top-2 { --tw-translate-y: -0.5rem; animation-name: keyframes-name-slide-in-from-top; }
+        .slide-in-from-top-4 { --tw-translate-y: -1rem; animation-name: keyframes-name-slide-in-from-top; }
+        .slide-in-from-bottom-6 { --tw-translate-y: 1.5rem; animation-name: keyframes-name-slide-in-from-bottom; }
+        .slide-in-from-bottom-8 { --tw-translate-y: 2rem; animation-name: keyframes-name-slide-in-from-bottom; }
+        .slide-in-from-bottom-12 { --tw-translate-y: 3rem; animation-name: keyframes-name-slide-in-from-bottom; }
+        .slide-in-from-right-8 { --tw-translate-x: 2rem; animation-name: keyframes-name-slide-in-from-right; }
+        .slide-in-from-right-12 { --tw-translate-x: 3rem; animation-name: keyframes-name-slide-in-from-right; }
+        .zoom-in-95 { --tw-scale-x: .95; --tw-scale-y: .95; animation-name: keyframes-name-zoom-in; }
+
+        .animate-in.fade-in { animation-name: keyframes-name-fade-in; }
+        .animate-in.slide-in-from-top-2 { animation-name: keyframes-name-fade-in, keyframes-name-slide-in-from-top; }
+        .animate-in.slide-in-from-top-4 { animation-name: keyframes-name-fade-in, keyframes-name-slide-in-from-top; }
+        .animate-in.slide-in-from-bottom-6 { animation-name: keyframes-name-fade-in, keyframes-name-slide-in-from-bottom; }
+        .animate-in.slide-in-from-bottom-8 { animation-name: keyframes-name-fade-in, keyframes-name-slide-in-from-bottom; }
+        .animate-in.slide-in-from-bottom-12 { animation-name: keyframes-name-fade-in, keyframes-name-slide-in-from-bottom; }
+        .animate-in.slide-in-from-right-8 { animation-name: keyframes-name-fade-in, keyframes-name-slide-in-from-right; }
+        .animate-in.slide-in-from-right-12 { animation-name: keyframes-name-fade-in, keyframes-name-slide-in-from-right; }
+        .animate-in.zoom-in-95 { animation-name: keyframes-name-fade-in, keyframes-name-zoom-in; }
     </style>
 <script type="importmap">
 {
