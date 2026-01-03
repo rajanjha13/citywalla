@@ -1,0 +1,61 @@
+
+import React from 'react';
+import { SUBJECT_OPTIONS } from '../constants';
+
+interface FilterBarProps {
+  searchQuery: string;
+  setSearchQuery: (q: string) => void;
+  activeSubject: string;
+  setActiveSubject: (s: string) => void;
+}
+
+const FilterBar: React.FC<FilterBarProps> = ({ searchQuery, setSearchQuery, activeSubject, setActiveSubject }) => {
+  return (
+    <div className="space-y-4 mb-8">
+      {/* Modern Search Input */}
+      <div className="relative group">
+        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+          <svg className="h-5 w-5 text-slate-400 group-focus-within:text-indigo-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+        <input
+          type="text"
+          placeholder="Search by name, location or skill..."
+          className="w-full pl-11 pr-4 py-4 bg-white border border-slate-200 rounded-2xl shadow-sm focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all text-slate-700 font-medium"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
+
+      {/* Horizontal Subject Pills */}
+      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0">
+        <button
+          onClick={() => setActiveSubject('')}
+          className={`whitespace-nowrap px-5 py-2 rounded-full text-sm font-bold transition-all ${
+            activeSubject === '' 
+            ? 'bg-indigo-600 text-white shadow-md shadow-indigo-200' 
+            : 'bg-white text-slate-500 border border-slate-200 hover:border-indigo-300'
+          }`}
+        >
+          All Subjects
+        </button>
+        {SUBJECT_OPTIONS.map((subject) => (
+          <button
+            key={subject}
+            onClick={() => setActiveSubject(subject)}
+            className={`whitespace-nowrap px-5 py-2 rounded-full text-sm font-bold transition-all ${
+              activeSubject === subject 
+              ? 'bg-indigo-600 text-white shadow-md shadow-indigo-200' 
+              : 'bg-white text-slate-500 border border-slate-200 hover:border-indigo-300'
+            }`}
+          >
+            {subject}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default FilterBar;
