@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Navbar from './components/Navbar';
 import BottomNav from './components/BottomNav';
 import Hero from './components/Hero';
@@ -38,6 +38,31 @@ const App: React.FC = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [activeTab]);
+
+  const allSearchableTerms = useMemo(() => {
+    const terms = new Set<string>();
+    MOCK_TUTORS.forEach(tutor => {
+      terms.add(tutor.name);
+      terms.add(tutor.location);
+      tutor.subjects.forEach(s => terms.add(s));
+    });
+    MOCK_PGS.forEach(pg => {
+      terms.add(pg.name);
+      terms.add(pg.location);
+      terms.add(pg.city);
+    });
+    return Array.from(terms);
+  }, []);
+
+  const filteredSuggestions = useMemo(() => {
+    if (!searchQuery) {
+      return [];
+    }
+    const lowercasedQuery = searchQuery.toLowerCase();
+    return allSearchableTerms
+      .filter(term => term.toLowerCase().includes(lowercasedQuery))
+      .slice(0, 5);
+  }, [searchQuery, allSearchableTerms]);
 
   const handleEnquiry = (tutor: Tutor) => {
     setSelectedTutor(tutor);
@@ -92,7 +117,8 @@ const App: React.FC = () => {
   const filteredTutors = tutors.filter(t => {
     const matchesStatus = t.status === 'approved';
     const matchesSearch = t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         t.location.toLowerCase().includes(searchQuery.toLowerCase());
+                         t.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         t.subjects.some(s => s.toLowerCase().includes(searchQuery.toLowerCase()));
     const matchesSubject = activeSubject === '' || t.subjects.includes(activeSubject);
     return matchesStatus && matchesSearch && matchesSubject;
   });
@@ -114,7 +140,12 @@ const App: React.FC = () => {
       <main className="flex-grow">
         {activeTab === 'home' && (
           <div className="animate-in fade-in duration-700">
-            <Hero onSearch={handleSearch} />
+            <Hero 
+              onSearch={handleSearch}
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              suggestions={filteredSuggestions}
+            />
             
             <div className="container mx-auto px-8 -mt-20 md:-mt-24 relative z-20">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
@@ -157,7 +188,7 @@ const App: React.FC = () => {
                   </div>
                   <button onClick={() => setActiveTab('find')} className="px-10 py-5 glass border-white/10 rounded-2xl text-white font-black text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-all shadow-xl whitespace-nowrap">View All Experts</button>
                 </div>
-                <TutorList tutors={filteredTutors.slice(0, 3)} onEnquiry={handleViewTutorDetails} />
+                <TutorList tutors={tutors.filter(t => t.status === 'approved').slice(0, 3)} onEnquiry={handleViewTutorDetails} />
               </div>
             </div>
 
@@ -170,7 +201,7 @@ const App: React.FC = () => {
                   </div>
                   <button onClick={() => setActiveTab('pgs')} className="px-10 py-5 glass border-white/10 rounded-2xl text-white font-black text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-all shadow-xl whitespace-nowrap">Explore PG's</button>
                 </div>
-                <PGList pgs={filteredPGs.slice(0, 3)} onEnquiry={handleViewPGDetails} />
+                <PGList pgs={pgs.filter(p => p.status === 'approved').slice(0, 3)} onEnquiry={handleViewPGDetails} />
               </div>
             </div>
           </div>
@@ -200,7 +231,13 @@ const App: React.FC = () => {
                <h1 className="text-4xl md:text-6xl font-black text-white tracking-tighter mb-4">Expert Faculty</h1>
                <p className="text-slate-500 text-lg md:text-xl font-medium">Browse verified educators and coaching centers.</p>
              </div>
-            <FilterBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} activeSubject={activeSubject} setActiveSubject={setActiveSubject} />
+            <FilterBar 
+              searchQuery={searchQuery} 
+              setSearchQuery={setSearchQuery} 
+              activeSubject={activeSubject} 
+              setActiveSubject={setActiveSubject} 
+              suggestions={filteredSuggestions}
+            />
             <div className="mt-12">
               <TutorList tutors={filteredTutors} onEnquiry={handleViewTutorDetails} />
             </div>

@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { SUBJECT_OPTIONS } from '../constants';
 
 interface FilterBarProps {
@@ -7,14 +7,22 @@ interface FilterBarProps {
   setSearchQuery: (q: string) => void;
   activeSubject: string;
   setActiveSubject: (s: string) => void;
+  suggestions: string[];
 }
 
-const FilterBar: React.FC<FilterBarProps> = ({ searchQuery, setSearchQuery, activeSubject, setActiveSubject }) => {
+const FilterBar: React.FC<FilterBarProps> = ({ searchQuery, setSearchQuery, activeSubject, setActiveSubject, suggestions }) => {
+  const [showSuggestions, setShowSuggestions] = useState(false);
+
+  const handleSuggestionClick = (suggestion: string) => {
+    setSearchQuery(suggestion);
+    setShowSuggestions(false);
+  };
+
   return (
     <div className="space-y-4 mb-8">
       {/* Modern Search Input */}
       <div className="relative group">
-        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none z-10">
           <svg className="h-5 w-5 text-slate-400 group-focus-within:text-indigo-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
@@ -25,7 +33,25 @@ const FilterBar: React.FC<FilterBarProps> = ({ searchQuery, setSearchQuery, acti
           className="w-full pl-11 pr-4 py-4 bg-white border border-slate-200 rounded-2xl shadow-sm focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all text-slate-700 font-medium"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
+          onFocus={() => setShowSuggestions(true)}
+          onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
+          autoComplete="off"
         />
+        {showSuggestions && suggestions.length > 0 && (
+          <div className="absolute top-full mt-2 w-full bg-white rounded-2xl overflow-hidden z-20 shadow-lg border border-slate-100 animate-in fade-in duration-200">
+            <ul className="py-2">
+              {suggestions.map((s) => (
+                <li
+                  key={s}
+                  onMouseDown={() => handleSuggestionClick(s)}
+                  className="px-6 py-3 text-slate-700 text-left font-medium hover:bg-indigo-50 hover:text-indigo-600 cursor-pointer"
+                >
+                  {s}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
 
       {/* Horizontal Subject Pills */}

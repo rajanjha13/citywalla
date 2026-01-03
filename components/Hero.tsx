@@ -3,15 +3,18 @@ import React, { useState, useEffect } from 'react';
 
 interface HeroProps {
   onSearch: (query: string) => void;
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+  suggestions: string[];
 }
 
 const SERVICES = ['Home Tutors', 'Coaching Classes', 'Private Tutors', "PG's"];
 
-const Hero: React.FC<HeroProps> = ({ onSearch }) => {
-  const [input, setInput] = useState('');
+const Hero: React.FC<HeroProps> = ({ onSearch, searchQuery, setSearchQuery, suggestions }) => {
   const [displayText, setDisplayText] = useState('');
   const [serviceIndex, setServiceIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   useEffect(() => {
     const currentService = SERVICES[serviceIndex];
@@ -36,8 +39,15 @@ const Hero: React.FC<HeroProps> = ({ onSearch }) => {
   }, [displayText, isDeleting, serviceIndex]);
 
   const handleSearch = () => {
-    if (!input.trim()) return;
-    onSearch(input);
+    if (!searchQuery.trim()) return;
+    setShowSuggestions(false);
+    onSearch(searchQuery);
+  };
+
+  const handleSuggestionClick = (suggestion: string) => {
+    setSearchQuery(suggestion);
+    setShowSuggestions(false);
+    onSearch(suggestion);
   };
 
   return (
@@ -74,12 +84,30 @@ const Hero: React.FC<HeroProps> = ({ onSearch }) => {
                 </div>
                 <input 
                   type="text" 
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onFocus={() => setShowSuggestions(true)}
+                  onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
                   placeholder="Subject or coaching class..." 
                   className="w-full bg-white/5 text-white pl-16 pr-8 py-5 md:py-6 rounded-[22px] focus:outline-none focus:bg-white/10 font-bold transition-all placeholder:text-slate-600 text-lg md:text-xl border border-transparent focus:border-white/10"
                   onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                  autoComplete="off"
                 />
+                 {showSuggestions && suggestions.length > 0 && (
+                  <div className="absolute top-full mt-2 w-full glass-dark rounded-2xl overflow-hidden z-20 border border-white/10 shadow-lg animate-in fade-in duration-200">
+                    <ul className="py-2">
+                      {suggestions.map((s) => (
+                        <li 
+                          key={s} 
+                          onMouseDown={() => handleSuggestionClick(s)}
+                          className="px-6 py-3 text-white text-left font-bold text-lg hover:bg-white/10 cursor-pointer"
+                        >
+                          {s}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
               <button 
                 onClick={handleSearch}
