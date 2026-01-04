@@ -118,6 +118,21 @@ const Hero: React.FC<HeroProps> = ({ onSearch, searchQuery, setSearchQuery, sugg
               </button>
             </div>
           </div>
+
+          <div className="max-w-4xl mx-auto mt-8 flex flex-wrap justify-center gap-x-6 gap-y-3 animate-in fade-in slide-in-from-bottom-12 duration-1000">
+            {[
+              { text: 'No Spam Calls', icon: 'M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636' },
+              { text: 'Data Privacy', icon: 'M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z' },
+              { text: 'Ad-Free', icon: 'M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11' }
+            ].map(item => (
+              <div key={item.text} className="flex items-center gap-2 text-slate-400">
+                <svg className="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d={item.icon} />
+                </svg>
+                <span className="text-xs sm:text-sm font-bold">{item.text}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

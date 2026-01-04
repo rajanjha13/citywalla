@@ -95,6 +95,15 @@ const PGEnquiryModal: React.FC<PGEnquiryModalProps> = ({ pg, onClose, onSubmitEn
                   <textarea className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-indigo-500 outline-none transition min-h-[100px]" value={formData.message} onChange={e => setFormData({...formData, message: e.target.value})} placeholder="When do you plan to move in? Any questions?"></textarea>
                 </div>
 
+                <div className="flex items-start gap-3 pt-2 p-4 bg-slate-50 rounded-xl border border-slate-200">
+                  <svg className="w-5 h-5 text-indigo-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                  <p className="text-xs text-slate-500 font-semibold leading-relaxed">
+                    <strong>Your Privacy Matters:</strong> We'll only share your details with <span className="text-indigo-600">{pg.name}</span> for this enquiry. No spam, guaranteed.
+                  </p>
+                </div>
+
                 <button type="submit" disabled={isSubmitting} className="w-full py-4 bg-indigo-600 text-white rounded-2xl font-bold text-lg shadow-lg hover:bg-indigo-700 transition active:scale-95 disabled:opacity-50">
                   {isSubmitting ? 'Processing...' : 'Send Enquiry'}
                 </button>

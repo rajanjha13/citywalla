@@ -135,6 +135,15 @@ const EnquiryModal: React.FC<EnquiryModalProps> = ({ tutor, onClose, onSubmitEnq
                   ></textarea>
                 </div>
 
+                <div className="flex items-start gap-3 pt-2 p-4 bg-slate-50 rounded-xl border border-slate-200">
+                  <svg className="w-5 h-5 text-indigo-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                  <p className="text-xs text-slate-500 font-semibold leading-relaxed">
+                    <strong>Your Privacy Matters:</strong> We'll only share your details with <span className="text-indigo-600">{tutor.name}</span> for this enquiry. No spam, guaranteed.
+                  </p>
+                </div>
+
                 <button 
                   type="submit" 
                   disabled={isSubmitting}

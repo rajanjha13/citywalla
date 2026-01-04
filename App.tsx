@@ -15,6 +15,7 @@ import AdminDashboard from './components/AdminDashboard';
 import FilterBar from './components/FilterBar';
 import LoginModal from './components/LoginModal';
 import Footer from './components/Footer';
+import USPs from './components/USPs';
 import { Tutor, Enquiry, PG } from './types';
 import { MOCK_TUTORS, MOCK_PGS } from './constants';
 
@@ -203,7 +204,9 @@ const App: React.FC = () => {
               <MapView />
             </div>
 
-            <div className="py-24 md:py-36">
+            <USPs />
+
+            <div className="pt-24 md:pt-0">
               <div className="container mx-auto px-8">
                 <div className="mb-14 flex flex-col md:flex-row md:items-end justify-between gap-6">
                   <div className="max-w-3xl">
