@@ -154,7 +154,7 @@ const App: React.FC = () => {
                          p.city.toLowerCase().includes(lowercasedQuery);
     return p.status === 'approved' && matchesSearch;
   });
-
+  
   return (
     <div className="min-h-screen flex flex-col pb-32 md:pb-0">
       <Navbar 
@@ -172,7 +172,7 @@ const App: React.FC = () => {
               suggestions={filteredSuggestions}
             />
             
-            <div className="container mx-auto px-8 -mt-20 md:-mt-24 relative z-20">
+            <div className="container mx-auto px-4 md:px-8 -mt-20 md:-mt-24 relative z-20">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
                 {[
                   { title: 'Home Tutors', desc: '1-on-1 personalized academic coaching.', icon: 'M12 14l9-5-9-5-9 5 9 5z', color: 'from-indigo-600 to-blue-500', tab: 'find' },
@@ -183,7 +183,7 @@ const App: React.FC = () => {
                   <div 
                     key={cat.title}
                     onClick={() => handleTabChange(cat.tab as any)}
-                    className="category-card p-8 md:p-10 rounded-[32px] cursor-pointer group animate-in fade-in slide-in-from-bottom-6 duration-500 shadow-xl"
+                    className="category-card p-6 md:p-8 rounded-[32px] cursor-pointer group animate-in fade-in slide-in-from-bottom-6 duration-500 shadow-xl"
                     style={{ animationDelay: `${idx * 150}ms` }}
                   >
                     <div className={`icon-box w-14 h-14 rounded-2xl bg-gradient-to-br ${cat.color} flex items-center justify-center text-white mb-6 shadow-xl group-hover:scale-110 transition-all`}>
@@ -196,40 +196,40 @@ const App: React.FC = () => {
               </div>
             </div>
 
-            <div className="container mx-auto px-8 pt-24 md:pt-36">
+            <div className="container mx-auto px-4 md:px-8 pt-20 md:pt-28">
               <div className="mb-12 text-center max-w-3xl mx-auto">
                 <div className="text-indigo-500 font-black text-xs uppercase tracking-[0.5em] mb-4">Discovery Network</div>
-                <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter">Explore Local Listings.</h2>
+                <h2 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tighter">Explore Local Listings.</h2>
               </div>
               <MapView />
             </div>
 
             <USPs />
 
-            <div className="pt-24 md:pt-0">
-              <div className="container mx-auto px-8">
+            <div className="pt-20 md:pt-0">
+              <div className="container mx-auto px-4 md:px-8">
                 <div className="mb-14 flex flex-col md:flex-row md:items-end justify-between gap-6">
                   <div className="max-w-3xl">
-                    <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-tight">Expert Faculty.</h2>
-                    <p className="text-slate-400 text-lg md:text-xl font-medium mt-4">Verified home tutors and coaching institutes near you.</p>
+                    <h2 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tighter leading-tight">Expert Faculty.</h2>
+                    <p className="text-base md:text-lg text-slate-400 font-medium mt-4">Verified home tutors and coaching institutes near you.</p>
                   </div>
                   <button onClick={() => handleTabChange('find')} className="px-10 py-5 glass border-white/10 rounded-2xl text-white font-black text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-all shadow-xl whitespace-nowrap">View All Experts</button>
                 </div>
-                <TutorList tutors={tutors.filter(t => t.status === 'approved').slice(0, 3)} onEnquiry={handleViewTutorDetails} />
               </div>
+              <TutorList tutors={tutors.filter(t => t.status === 'approved').slice(0, 6)} onEnquiry={handleViewTutorDetails} isCarousel />
             </div>
 
-            <div className="py-24 md:py-36 pb-48">
-              <div className="container mx-auto px-8">
+            <div className="py-20 md:py-28">
+              <div className="container mx-auto px-4 md:px-8">
                 <div className="mb-14 flex flex-col md:flex-row md:items-end justify-between gap-6">
                   <div className="max-w-3xl">
-                    <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-tight">Premium Living.</h2>
-                    <p className="text-slate-400 text-lg md:text-xl font-medium mt-4">Secure, verified accommodations for students.</p>
+                    <h2 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tighter leading-tight">Premium Living.</h2>
+                    <p className="text-base md:text-lg text-slate-400 font-medium mt-4">Secure, verified accommodations for students.</p>
                   </div>
                   <button onClick={() => handleTabChange('pgs')} className="px-10 py-5 glass border-white/10 rounded-2xl text-white font-black text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-all shadow-xl whitespace-nowrap">Explore PG's</button>
                 </div>
-                <PGList pgs={pgs.filter(p => p.status === 'approved').slice(0, 3)} onEnquiry={handleViewPGDetails} />
               </div>
+              <PGList pgs={pgs.filter(p => p.status === 'approved').slice(0, 6)} onEnquiry={handleViewPGDetails} isCarousel />
             </div>
           </div>
         )}
@@ -294,12 +294,10 @@ const App: React.FC = () => {
         )}
       </main>
 
-      <div className="hidden md:block">
-        <Footer />
-      </div>
+      <Footer />
 
       <BottomNav 
-        activeTab={activeTab === 'pg-details' ? 'pgs' : activeTab === 'tutor-details' ? 'find' : activeTab} 
+        activeTab={activeTab} 
         setActiveTab={handleTabChange} 
       />
       

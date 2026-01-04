@@ -78,12 +78,12 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onComplete }) => {
                 <button 
                   key={type.label}
                   onClick={() => setRole(type.id)}
-                  className={`p-6 md:p-8 rounded-[24px] sm:rounded-[32px] border-2 transition flex flex-col items-center text-center gap-4 ${
+                  className={`p-4 md:p-6 rounded-[24px] border-2 transition flex flex-col items-center text-center gap-3 ${
                     role === type.id ? 'border-indigo-600 bg-indigo-600/10 text-white shadow-xl' : 'border-white/5 bg-white/5 text-slate-400 hover:border-white/20'
                   }`}
                 >
-                  <svg className="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d={type.icon}></path></svg>
-                  <span className="font-bold text-sm sm:text-base md:text-lg">{type.label}</span>
+                  <svg className="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d={type.icon}></path></svg>
+                  <span className="font-bold text-sm md:text-base">{type.label}</span>
                 </button>
               ))}
             </div>

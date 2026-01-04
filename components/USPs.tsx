@@ -21,12 +21,12 @@ const USPs: React.FC = () => {
   ];
 
   return (
-    <div className="py-24 md:py-36">
-      <div className="container mx-auto px-8">
+    <div className="py-20 md:py-28">
+      <div className="container mx-auto px-4 md:px-8">
         <div className="mb-14 text-center max-w-3xl mx-auto">
           <div className="text-indigo-500 font-black text-xs uppercase tracking-[0.5em] mb-4">Our Promise</div>
-          <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter">A Platform Built On Trust.</h2>
-          <p className="text-slate-400 text-lg md:text-xl font-medium mt-6">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tighter">A Platform Built On Trust.</h2>
+          <p className="text-base md:text-lg text-slate-400 font-medium mt-6">
             We're revolutionizing the search experience by putting you first. No ads, no spam, and absolute respect for your privacy.
           </p>
         </div>
@@ -34,7 +34,7 @@ const USPs: React.FC = () => {
           {features.map((feature, index) => (
             <div 
               key={feature.title} 
-              className="p-10 glass rounded-[32px] border border-white/5 animate-in fade-in slide-in-from-bottom-8 duration-700"
+              className="p-6 md:p-8 glass rounded-[32px] border border-white/5 animate-in fade-in slide-in-from-bottom-8 duration-700"
               style={{ animationDelay: `${index * 150}ms` }}
             >
               <div className="w-16 h-16 bg-indigo-600/10 text-indigo-400 rounded-2xl flex items-center justify-center mb-8 border border-indigo-500/20">

@@ -86,7 +86,7 @@ const Hero: React.FC<HeroProps> = ({ onSearch, searchQuery, setSearchQuery, sugg
   };
 
   return (
-    <div className="relative pt-16 pb-20 md:pt-32 md:pb-36 flex flex-col items-center justify-center text-center px-6 overflow-hidden">
+    <div className="relative pt-20 pb-20 md:pt-28 md:pb-32 flex flex-col items-center justify-center text-center px-4 sm:px-6 overflow-hidden">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-[500px] bg-indigo-600/10 blur-[130px] rounded-full -z-10 pointer-events-none"></div>
       
       <div className="max-w-6xl mx-auto space-y-8 md:space-y-10">
@@ -95,17 +95,17 @@ const Hero: React.FC<HeroProps> = ({ onSearch, searchQuery, setSearchQuery, sugg
           <span className="text-xs md:text-sm font-black uppercase tracking-[0.3em] text-indigo-300">CityWala Premium Network</span>
         </div>
 
-        <h1 className="text-6xl md:text-8xl font-heading font-black tracking-tighter leading-[0.85] text-white animate-in fade-in duration-1000">
+        <h1 className="text-5xl sm:text-6xl md:text-8xl font-heading font-black tracking-tighter leading-[0.85] text-white animate-in fade-in duration-1000">
           CITY<span className="text-gradient">WALA</span>
         </h1>
 
-        <div className="min-h-[50px] md:min-h-[80px] flex items-center justify-center">
-          <h2 className="text-2xl md:text-5xl font-black text-slate-400 tracking-tight leading-tight">
+        <div className="min-h-[40px] md:min-h-[60px] flex items-center justify-center">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-slate-400 tracking-tight leading-tight">
             Find <span className="text-white typing-container italic">{displayText}</span>
           </h2>
         </div>
 
-        <p className="text-base md:text-xl text-slate-400 max-w-3xl mx-auto font-medium leading-relaxed opacity-80">
+        <p className="text-base md:text-lg text-slate-400 max-w-3xl mx-auto font-medium leading-relaxed opacity-80">
           Connecting elite educators, coaching centers, and premium accommodations in one seamless platform.
         </p>
 
@@ -124,7 +124,7 @@ const Hero: React.FC<HeroProps> = ({ onSearch, searchQuery, setSearchQuery, sugg
                   onFocus={() => setShowSuggestions(true)}
                   onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
                   placeholder={placeholderText} 
-                  className="w-full bg-white/5 text-white pl-16 pr-8 py-5 md:py-6 rounded-[22px] focus:outline-none focus:bg-white/10 font-bold transition-all placeholder:text-slate-500 text-lg md:text-xl border border-transparent focus:border-white/10"
+                  className="w-full bg-white/5 text-white pl-16 pr-8 py-5 rounded-[22px] focus:outline-none focus:bg-white/10 font-bold transition-all placeholder:text-slate-500 text-base md:text-lg border border-transparent focus:border-white/10"
                   onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                   autoComplete="off"
                 />
@@ -135,7 +135,7 @@ const Hero: React.FC<HeroProps> = ({ onSearch, searchQuery, setSearchQuery, sugg
                         <li 
                           key={s} 
                           onMouseDown={() => handleSuggestionClick(s)}
-                          className="px-6 py-3 text-white text-left font-bold text-lg hover:bg-white/10 cursor-pointer"
+                          className="px-6 py-3 text-white text-left font-bold text-base hover:bg-white/10 cursor-pointer"
                         >
                           {s}
                         </li>
@@ -146,7 +146,7 @@ const Hero: React.FC<HeroProps> = ({ onSearch, searchQuery, setSearchQuery, sugg
               </div>
               <button 
                 onClick={handleSearch}
-                className="bg-indigo-600 text-white px-10 py-5 md:py-6 rounded-[22px] font-black text-sm md:text-base uppercase tracking-widest flex items-center justify-center gap-3 transition-all hover:bg-indigo-500 active:scale-95 group shadow-xl shadow-indigo-900/40"
+                className="bg-indigo-600 text-white px-10 py-5 rounded-[22px] font-black text-sm uppercase tracking-widest flex items-center justify-center gap-3 transition-all hover:bg-indigo-500 active:scale-95 group shadow-xl shadow-indigo-900/40"
               >
                 <span>Search</span>
                 <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>

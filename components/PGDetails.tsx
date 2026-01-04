@@ -63,7 +63,7 @@ const PGDetails: React.FC<PGDetailsProps> = ({ pg, onBack, onEnquire }) => {
         </div>
       </div>
 
-      <div className="container mx-auto px-6 py-12 md:py-20">
+      <div className="container mx-auto px-6 pt-12 pb-40 md:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
           <div className="lg:col-span-2 space-y-12">
             <section className="animate-in fade-in slide-in-from-bottom-8 duration-700">
@@ -193,6 +193,13 @@ const PGDetails: React.FC<PGDetailsProps> = ({ pg, onBack, onEnquire }) => {
              </div>
           </aside>
         </div>
+      </div>
+      
+      {/* Floating Action Button (Mobile) */}
+      <div className="md:hidden fixed bottom-24 left-0 right-0 z-50 px-6">
+         <button onClick={onEnquire} className="w-full py-5 bg-indigo-600 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-slate-900 transition-all active:scale-95 shadow-2xl animate-in fade-in slide-in-from-bottom-8 duration-500">
+           Schedule a Visit (₹{pg.monthlyRent}/mo)
+         </button>
       </div>
     </div>
   );

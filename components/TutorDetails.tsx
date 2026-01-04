@@ -27,7 +27,7 @@ const TutorDetails: React.FC<TutorDetailsProps> = ({ tutor, onBack, onEnquire })
       </button>
 
       {/* Main Scrollable Content */}
-      <div className="relative z-10 pt-[25vh] md:pt-[30vh] pb-32 md:pb-24">
+      <div className="relative z-10 pt-[25vh] md:pt-[30vh] pb-40 md:pb-24">
         <div className="container mx-auto px-4 md:px-6">
           
           <div className="bg-slate-800/50 backdrop-blur-xl p-6 md:p-8 rounded-[40px] border border-white/10 shadow-2xl">
@@ -137,7 +137,7 @@ const TutorDetails: React.FC<TutorDetailsProps> = ({ tutor, onBack, onEnquire })
       </div>
 
       {/* Floating Action Button (Mobile) */}
-      <div className="md:hidden fixed bottom-6 left-0 right-0 z-50 px-6">
+      <div className="md:hidden fixed bottom-24 left-0 right-0 z-50 px-6">
          <button onClick={onEnquire} className="w-full py-5 bg-white text-slate-950 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-indigo-400 hover:text-white transition-all active:scale-95 shadow-2xl animate-in fade-in slide-in-from-bottom-8 duration-500">
            Book a Demo (₹{tutor.hourlyRate}/hr)
          </button>
