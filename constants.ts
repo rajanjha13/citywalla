@@ -14,6 +14,7 @@ export const MOCK_TUTORS: Tutor[] = [
     hourlyRate: 800,
     imageUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80',
     verified: true,
+    qualifications: ['PhD in Physics, IIT Delhi', 'M.Sc Gold Medalist'],
     status: 'approved'
   },
   {
@@ -28,6 +29,7 @@ export const MOCK_TUTORS: Tutor[] = [
     hourlyRate: 1200,
     imageUrl: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=400&q=80',
     verified: true,
+    qualifications: ['Estd. 2002', 'Top 100 AIR Ranks Produced', 'Certified Faculty'],
     status: 'approved'
   },
   {
@@ -42,6 +44,7 @@ export const MOCK_TUTORS: Tutor[] = [
     hourlyRate: 450,
     imageUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80',
     verified: true,
+    qualifications: ['English Hons. Graduate, DU', 'UPSC Mains Qualified (2 times)'],
     status: 'approved'
   },
   {
@@ -56,6 +59,7 @@ export const MOCK_TUTORS: Tutor[] = [
     hourlyRate: 1500,
     imageUrl: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=400&q=80',
     verified: true,
+    qualifications: ['Industry Expert Mentors', 'Certified Full-Stack Program'],
     status: 'approved'
   },
   {
@@ -70,6 +74,7 @@ export const MOCK_TUTORS: Tutor[] = [
     hourlyRate: 700,
     imageUrl: 'https://images.unsplash.com/photo-1580894908361-967195033215?auto=format&fit=crop&w=400&q=80',
     verified: true,
+    qualifications: ['Chartered Accountant (CA)', 'B.Com (Hons)'],
     status: 'approved'
   },
   {
@@ -84,6 +89,7 @@ export const MOCK_TUTORS: Tutor[] = [
     hourlyRate: 1800,
     imageUrl: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=400&q=80',
     verified: true,
+    qualifications: ['Faculty from Top Universities', 'Ex-Civil Servants as Mentors'],
     status: 'pending'
   }
 ];

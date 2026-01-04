@@ -9,11 +9,23 @@ interface HeroProps {
 }
 
 const SERVICES = ['Home Tutors', 'Coaching Classes', 'Private Tutors', "PG's"];
+const PLACEHOLDERS = [
+  'Search for tutors...',
+  'Find private tutors...',
+  'Discover dance classes...',
+  'Locate yoga teachers...',
+  "Explore PG's..."
+];
 
 const Hero: React.FC<HeroProps> = ({ onSearch, searchQuery, setSearchQuery, suggestions }) => {
   const [displayText, setDisplayText] = useState('');
   const [serviceIndex, setServiceIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
+  
+  const [placeholderText, setPlaceholderText] = useState('');
+  const [placeholderIndex, setPlaceholderIndex] = useState(0);
+  const [isDeletingPlaceholder, setIsDeletingPlaceholder] = useState(false);
+
   const [showSuggestions, setShowSuggestions] = useState(false);
 
   useEffect(() => {
@@ -37,6 +49,29 @@ const Hero: React.FC<HeroProps> = ({ onSearch, searchQuery, setSearchQuery, sugg
 
     return () => clearTimeout(timeout);
   }, [displayText, isDeleting, serviceIndex]);
+
+  useEffect(() => {
+    const currentPlaceholder = PLACEHOLDERS[placeholderIndex];
+    const typingSpeed = isDeletingPlaceholder ? 40 : 80;
+
+    const timeout = setTimeout(() => {
+      if (!isDeletingPlaceholder) {
+        setPlaceholderText(currentPlaceholder.substring(0, placeholderText.length + 1));
+        if (placeholderText.length === currentPlaceholder.length) {
+          setTimeout(() => setIsDeletingPlaceholder(true), 2500);
+        }
+      } else {
+        setPlaceholderText(currentPlaceholder.substring(0, placeholderText.length - 1));
+        if (placeholderText.length === 0) {
+          setIsDeletingPlaceholder(false);
+          setPlaceholderIndex((prev) => (prev + 1) % PLACEHOLDERS.length);
+        }
+      }
+    }, typingSpeed);
+
+    return () => clearTimeout(timeout);
+  }, [placeholderText, isDeletingPlaceholder, placeholderIndex]);
+
 
   const handleSearch = () => {
     if (!searchQuery.trim()) return;
@@ -88,8 +123,8 @@ const Hero: React.FC<HeroProps> = ({ onSearch, searchQuery, setSearchQuery, sugg
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onFocus={() => setShowSuggestions(true)}
                   onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
-                  placeholder="Subject or coaching class..." 
-                  className="w-full bg-white/5 text-white pl-16 pr-8 py-5 md:py-6 rounded-[22px] focus:outline-none focus:bg-white/10 font-bold transition-all placeholder:text-slate-600 text-lg md:text-xl border border-transparent focus:border-white/10"
+                  placeholder={placeholderText} 
+                  className="w-full bg-white/5 text-white pl-16 pr-8 py-5 md:py-6 rounded-[22px] focus:outline-none focus:bg-white/10 font-bold transition-all placeholder:text-slate-500 text-lg md:text-xl border border-transparent focus:border-white/10"
                   onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                   autoComplete="off"
                 />

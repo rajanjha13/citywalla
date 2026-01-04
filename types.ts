@@ -18,6 +18,7 @@ export interface Tutor {
   hourlyRate: number;
   imageUrl: string;
   verified: boolean;
+  qualifications: string[];
   status?: 'pending' | 'approved';
 }
 
